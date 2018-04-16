@@ -3,23 +3,13 @@
 {% block content %}
     <h1><center>Add a New Post</center></h1>
     <form action="/newpost" method="post">
-        <table>
-            <tr>
-                <td><label for="title">Title for your new blog:</label></td>
-                <td>
-                    <input name="blog_title" type="text" value="{{ blog_title }}">
-                    <span class="error">{{ title_error }}</span> 
-                 </td>
-            </tr>
-            <tr>
-                <td><label for="body">Your new blog:</label></td>
-                <td>
-                    <textarea name="blog_body" type="text"  maxlength="240" 
-                             style="width:400px; height:50px;">{{ blog_body }}</textarea>
-                    <span class="error">{{ body_error }}</span> 
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Add Entry"/>
+        <p><label for="title">Title for your new blog:</label></p>
+        <p><input name="blog_title" type="text" value="{{ blog_title }}"></p>
+        <p><em><span class="error">{{ title_error }}</span></em></p>
+        <br><p><label for="body">Your new blog:</label></p>
+        <p><textarea name="blog_body" type="text"  maxlength="240" 
+           style="width:400px; height:50px;">{{ blog_body }}</textarea></p>
+        <p><em><span class="error">{{ body_error }}</span> </em></p>
+        <p><input type="submit" value="Add Entry"/></p>
     </form>
 {% endblock %}
