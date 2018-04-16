@@ -50,13 +50,13 @@ def login():
 def newpost():
     
     if request.method == 'POST':
-        title = request.form['title']
+        title = request.form['blog_title']
         if title:
             title_error = ''
         else:
             title_error = 'Please fill in the title'
 
-        body = request.form['body']
+        body = request.form['blog_body']
         if body:
             body_error = ''
         else:
@@ -69,12 +69,13 @@ def newpost():
             return redirect('/blog?id='+str(new_post.id))
         else:
             return render_template('/newpost.html',
-                title=title,
+                title="Add Blog Entry",
+                blog_title=title,
                 title_error=title_error,
-                body=body,
+                blog_body=body,
                 body_error=body_error)
     else:
-        return render_template('/newpost.html')
+        return render_template('/newpost.html', title="Add Blog Entry")
 
 
 @app.route('/logout')
@@ -87,12 +88,12 @@ def blog():
 
     id = request.args.get('id')
     if id == None:
-        blogs = Blog.query.all()
+        blogs = Blog.query.order_by(Blog.id.desc()).all()
     else:
         #print ("ID = "+id)
         blogs = Blog.query.filter_by(id=id).all()
     
-    return render_template('blog.html', blogs=blogs)
+    return render_template('blog.html', title="Build A Blog", blogs=blogs)
 
 @app.route('/delete-task', methods=['POST'])
 def delete_task():
