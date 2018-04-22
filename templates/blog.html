@@ -7,7 +7,7 @@
         {% for blog in blogs %}
             <h1><center>{{blog.title}}</center></h1>
             <p>{{ blog.body }}</p>
-            <p>{{ blog.username }}</p>
+            <p><h5>author: <a href='/blog?user={{blog.owner.username}}'>{{blog.owner.username}}</h5></p>
         {% endfor %}
 
     {% else %}
@@ -24,7 +24,7 @@
                 {% for blog in blogs %}
                     <a href='/blog?id={{blog.id}}'><h3>{{blog.title}}</h3></a>
                     <p>{{ blog.body }}</p>
-                    <p><h5>author: <a href='/blog?user={{blog.username}}'>{{blog.username}}</h5></p>
+                    <p><h5>author: <a href='/blog?user={{blog.owner.username}}'>{{blog.owner.username}}</h5></p>
                     <hr>
                 {% endfor %}
             </ul>
