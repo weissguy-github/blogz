@@ -22,6 +22,11 @@ class User(db.Model):
         self.username = username
         self.pw_hash = make_pw_hash(password)
 
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+   
+
 class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +38,9 @@ class Blog(db.Model):
         self.title = title
         self.body = body
         self.owner = usr_obj  #Owner OBJECT
+
+    def __repr__(self):
+        return '<Blog %r>' % self.title
 
 
 # before_request decorator runs function before 
@@ -55,7 +63,7 @@ def login():
         if user:
             if check_pw_hash(password, user.pw_hash):
                 session['username'] = username  # "remember" user logged in
-                flash("Logged in")
+                flash("Welcome "+user.username)
                 print(session['username']+"<<<<SESSION!!!!!!!!!!")
                 return redirect ('/newpost')
             else:
@@ -149,7 +157,7 @@ def newpost():
     else:
         return render_template('/newpost.html')
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST','GET'])
 def logout():
     del session['username']
     return redirect('/')

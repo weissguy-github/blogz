@@ -8,7 +8,30 @@
             }
         </style>
     </head>
-<body>
+    <body>
+        <a href="/">home</a> | <a href="blog">all posts</a> | <a href="newpost">new post</a>
+        <div style='float: right'>
+            {% if 'username' in session %}
+                <a href='blog?user='+{{ session['username'] }}>{{ session['username'] }}</a>
+                <form action="/logout" method="post" id='logout'>
+                <input type="submit" value="Log Out" />
+                </form>
+            {% else %}
+                <a href="login">login</a> | <a href="signup">signup</a>
+            {% endif %}
+        </div></p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+<!--        
     <nav>
         <div>
             <a href="/login">login</a>&nbsp; &nbsp;
@@ -18,7 +41,7 @@
             <a href="/newpost">new post</a>
         </div>
     </nav>
-
+-->
     {% block content %}
     {% endblock %}
 
