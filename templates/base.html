@@ -12,9 +12,9 @@
         <a href="/">home</a> | <a href="blog">all posts</a> | <a href="newpost">new post</a>
         <div style='float: right'>
             {% if 'username' in session %}
-                <a href='blog?user='+{{ session['username'] }}>{{ session['username'] }}</a>
                 <form action="/logout" method="post" id='logout'>
-                <input type="submit" value="Log Out" />
+                    <input type="submit" value="Log Out" /> | 
+                    <a href='blog?user={{ session["username"] }}'>{{ session['username'] }}</a>
                 </form>
             {% else %}
                 <a href="login">login</a> | <a href="signup">signup</a>
@@ -31,17 +31,6 @@
             {% endif %}
         {% endwith %}
 
-<!--        
-    <nav>
-        <div>
-            <a href="/login">login</a>&nbsp; &nbsp;
-            <a href="/logout">logout</a>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-            <a href="/">home</a>&nbsp; &nbsp;
-            <a href="/blog">all posts</a>&nbsp; &nbsp;
-            <a href="/newpost">new post</a>
-        </div>
-    </nav>
--->
     {% block content %}
     {% endblock %}
 

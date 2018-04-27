@@ -47,10 +47,8 @@ class Blog(db.Model):
 # calling request handler for incoming request
 @app.before_request
 def require_login():
-    print(request.endpoint)
     allowed_routes = ['login', 'signup', 'list_blogs', 'index']
     if request.endpoint not in allowed_routes and 'username' not in session:
-        print('require_login directing to /login.com')
         return redirect('/login')
 
 
@@ -64,7 +62,6 @@ def login():
             if check_pw_hash(password, user.pw_hash):
                 session['username'] = username  # "remember" user logged in
                 flash("Welcome "+user.username)
-                print(session['username']+"<<<<SESSION!!!!!!!!!!")
                 return redirect ('/newpost')
             else:
                 flash('User password incorrect', 'error')
@@ -109,7 +106,6 @@ def signup():
             vp_error = ''
 
         if (uname_error + pwd_error + vp_error) == '':
-            print('signup success')
             session['username'] = uname  # "remember" user logged in
             flash("Logged in")
             new_user = User(uname, password) #Default to null for blogs FK
@@ -117,7 +113,6 @@ def signup():
             db.session.commit()
             return redirect('/newpost')
         else:
-            print('signup errors... ' + uname_error + pwd_error + vp_error)
             return render_template('signup.html',
                 uname=uname,        uname_error=uname_error,
                 password=password,  pwd_error=pwd_error,
@@ -143,7 +138,6 @@ def newpost():
         if title and body:
 
             user = User.query.filter_by(username=session['username']).first()
-            print(">>>>>>>>>>>>> user.id,name = "+str(user.id)+","+str(user.username)+" <<<<<<<<<<<<<<<<<<<<<<<<")
             new_post = Blog(title, body, user)
             db.session.add(new_post)
             db.session.commit()
